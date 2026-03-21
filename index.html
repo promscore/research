@@ -5,93 +5,142 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SCU Research Scoring Tool – Cycle 15 (2025–2028)</title>
 <style>
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:Arial,sans-serif;font-size:13px;backgrohund:#f4f6f9;color:#1a1a1a;padding:16px}
-  h1{font-size:18px;font-weight:700;color:#fff;background:#1F3864;padding:14px 18px;border-radius:8px 8px 0 0;margin-bottom:0}
-  .subtitle{background:#D6E4F0;color:#333;font-size:11px;padding:8px 18px;border-radius:0;margin-bottom:16px;font-style:italic}
-  .card{background:#fff;border:1px solid #dde3ea;border-radius:10px;padding:18px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
-  .tbl-wrap{overflow-x:auto}
-  table{border-collapse:collapse;width:100%;min-width:920px}
-  thead tr{background:#2E75B6}
-  th{padding:9px 7px;font-size:11px;font-weight:700;color:#fff;text-align:center;border:1px solid #1a5276;white-space:nowrap}
-  th.left-align{text-align:left}
-  td{padding:5px 6px;border:1px solid #dde3ea;font-size:12px;text-align:center;vertical-align:middle}
-  td.left-align{text-align:left}
-  td.calc-col{background:#EBF3FB;font-weight:700;color:#1F3864}
-  tr.even td:not(.calc-col){background:#f9f9f9}
-  tr.odd  td:not(.calc-col){background:#fff}
-  select,input[type=text]{font-size:12px;width:100%;padding:4px 5px;border:1px solid #b0bec5;border-radius:5px;background:#fff;color:#1a1a1a;outline:none}
-  select:focus,input:focus{border-color:#2E75B6}
-  input[type=number]{font-size:12px;width:64px;text-align:center;padding:4px 5px;border:1px solid #b0bec5;border-radius:5px;background:#fff;color:#1a1a1a}
-  .del-btn{background:none;border:1px solid #e57373;border-radius:5px;padding:3px 9px;cursor:pointer;color:#c62828;font-size:11px;transition:background .15s}
-  .del-btn:hover{background:#ffebee}
-  .add-btn{background:#fff;border:1px solid #90a4ae;border-radius:8px;padding:9px 22px;font-size:13px;cursor:pointer;color:#1F3864;font-weight:600;margin:8px 0 20px;transition:background .15s}
-  .add-btn:hover{background:#f0f4f8}
-  .auto-badge{font-size:10px;background:#dbeafe;color:#1e40af;border-radius:4px;padding:1px 6px;margin-left:4px;font-style:normal}
-  .grade-badge{font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;white-space:nowrap;display:inline-block}
-  .g-ex{background:#bbf7d0;color:#14532d}
-  .g-vg{background:#bfdbfe;color:#1e3a8a}
-  .g-gd{background:#fef9c3;color:#713f12}
-  .g-ac{background:#f1f5f9;color:#475569}
-  .g-wk{background:#fee2e2;color:#7f1d1d}
-  .pts-val{font-size:14px;font-weight:700}
-  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}
-  .metric-card{background:#f0f4fa;border-radius:8px;padding:14px 16px;text-align:center}
-  .metric-label{font-size:11px;color:#666;margin-bottom:6px}
-  .metric-val{font-size:24px;font-weight:700;color:#1F3864}
-  .thresh-grid{display:grid;grid-template-columns:1fr;gap:8px}
-  .thresh-row{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;gap:10px}
-  .thresh-label{font-size:12px;color:#475569;flex:1}
-  .thresh-val{font-size:13px;font-weight:700;min-width:44px;text-align:center}
-  .ok-badge{background:#dcfce7;color:#166534;border-radius:5px;padding:3px 10px;font-size:11px;font-weight:700}
-  .fail-badge{background:#fee2e2;color:#991b1b;border-radius:5px;padding:3px 10px;font-size:11px;font-weight:700}
-  details{margin-top:4px}
-  summary{cursor:pointer;font-size:12px;font-weight:700;color:#2E75B6;padding:6px 0;user-select:none}
-  .ref-tbl{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}
-  .ref-tbl th{background:#1F3864;color:#fff;padding:7px 10px;text-align:center;border:1px solid #1a5276}
-  .ref-tbl td{padding:5px 10px;border:1px solid #dde3ea;text-align:center}
-  .ref-tbl tr:nth-child(even) td{background:#f4f6f9}
-  .sec-hdr{font-size:13px;font-weight:700;color:#fff;background:#2E75B6;padding:8px 14px;border-radius:6px;margin-bottom:10px}
-  .note-box{background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:10px 14px;font-size:11px;color:#666;line-height:1.6;margin-top:8px}
-  .section-title{font-size:15px;font-weight:700;color:#1F3864;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #2E75B6}
-  @media print{
-    body{background:#fff;padding:4px}
-    .add-btn,.del-btn{display:none}
-    .card{box-shadow:none;border-color:#ccc}
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;font-size:13px;background:#f4f6f9;color:#1a1a1a;padding:12px}
+h1{font-size:18px;font-weight:700;color:#fff;background:#1F3864;padding:14px 18px;border-radius:8px 8px 0 0;margin-bottom:0;line-height:1.3}
+.author-bar{background:#1F3864;color:#C9A84C;text-align:center;font-size:11px;padding:5px 18px 10px;font-family:Arial,sans-serif;border-radius:0}
+.subtitle{background:#D6E4F0;color:#333;font-size:11px;padding:8px 18px;margin-bottom:12px;font-style:italic;line-height:1.5}
+.card{background:#fff;border:1px solid #dde3ea;border-radius:10px;padding:14px;margin-bottom:14px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+.section-title{font-size:15px;font-weight:700;color:#1F3864;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #2E75B6}
+
+/* ── DESKTOP TABLE ── */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl-wrap table{border-collapse:collapse;width:100%;min-width:860px}
+thead tr{background:#2E75B6}
+th{padding:9px 7px;font-size:11px;font-weight:700;color:#fff;text-align:center;border:1px solid #1a5276;white-space:nowrap}
+th.la{text-align:left}
+td{padding:5px 6px;border:1px solid #dde3ea;font-size:12px;text-align:center;vertical-align:middle}
+td.la{text-align:left}
+td.calc{background:#EBF3FB;font-weight:700;color:#1F3864}
+tr.even td:not(.calc){background:#f9f9f9}
+tr.odd  td:not(.calc){background:#fff}
+select,input[type=text]{font-size:12px;width:100%;padding:4px 5px;border:1px solid #b0bec5;border-radius:5px;background:#fff;color:#1a1a1a;outline:none}
+select:focus,input:focus{border-color:#2E75B6}
+input[type=number]{font-size:12px;width:64px;text-align:center;padding:4px 5px;border:1px solid #b0bec5;border-radius:5px;background:#fff;color:#1a1a1a}
+.del-btn{background:none;border:1px solid #e57373;border-radius:5px;padding:3px 9px;cursor:pointer;color:#c62828;font-size:11px}
+
+/* ── MOBILE CARD per paper ── */
+.paper-card{background:#fff;border:1px solid #dde3ea;border-radius:8px;padding:12px;margin-bottom:10px;position:relative}
+.paper-card-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.paper-num{font-size:11px;font-weight:700;color:#888;background:#f0f4fa;border-radius:4px;padding:2px 8px}
+.paper-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.paper-field{display:flex;flex-direction:column;gap:3px}
+.paper-field label{font-size:10px;color:#666;font-weight:700;text-transform:uppercase;letter-spacing:0.3px}
+.paper-field select,.paper-field input{font-size:13px;padding:6px 8px;border:1px solid #b0bec5;border-radius:6px;background:#fff;width:100%;color:#1a1a1a}
+.paper-field-full{grid-column:1/-1}
+.paper-results{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:10px;padding-top:10px;border-top:1px solid #e2e8f0}
+.res-box{background:#EBF3FB;border-radius:6px;padding:6px 4px;text-align:center}
+.res-lbl{font-size:9px;color:#666;margin-bottom:2px}
+.res-val{font-size:13px;font-weight:700;color:#1F3864}
+.del-btn-card{background:none;border:1px solid #e57373;border-radius:5px;padding:4px 10px;cursor:pointer;color:#c62828;font-size:12px}
+
+/* ── SHARED ── */
+.add-btn{background:#fff;border:1px solid #90a4ae;border-radius:8px;padding:10px 22px;font-size:13px;cursor:pointer;color:#1F3864;font-weight:600;margin:6px 0 18px;display:block;width:100%;text-align:center}
+.add-btn:active{background:#f0f4f8}
+.auto-badge{font-size:10px;background:#dbeafe;color:#1e40af;border-radius:4px;padding:1px 5px;margin-left:3px}
+.grade-badge{font-size:11px;padding:2px 6px;border-radius:5px;font-weight:700;white-space:nowrap;display:inline-block}
+.g-ex{background:#bbf7d0;color:#14532d}
+.g-vg{background:#bfdbfe;color:#1e3a8a}
+.g-gd{background:#fef9c3;color:#713f12}
+.g-ac{background:#f1f5f9;color:#475569}
+.g-wk{background:#fee2e2;color:#7f1d1d}
+.summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px}
+.metric-card{background:#f0f4fa;border-radius:8px;padding:12px;text-align:center}
+.metric-label{font-size:11px;color:#666;margin-bottom:4px;line-height:1.3}
+.metric-val{font-size:22px;font-weight:700;color:#1F3864}
+.thresh-grid{display:grid;gap:8px}
+.thresh-row{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;gap:8px;flex-wrap:wrap}
+.thresh-label{font-size:11px;color:#475569;flex:1;min-width:160px}
+.thresh-val{font-size:13px;font-weight:700;min-width:36px;text-align:center}
+.ok-badge{background:#dcfce7;color:#166534;border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700;white-space:nowrap}
+.fail-badge{background:#fee2e2;color:#991b1b;border-radius:5px;padding:3px 8px;font-size:11px;font-weight:700;white-space:nowrap}
+.note-box{background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:10px 12px;font-size:11px;color:#666;line-height:1.6;margin-top:10px}
+details{margin-top:4px}
+summary{cursor:pointer;font-size:12px;font-weight:700;color:#2E75B6;padding:6px 0;user-select:none}
+.ref-tbl{width:100%;border-collapse:collapse;margin-top:8px;font-size:11px}
+.ref-tbl th{background:#1F3864;color:#fff;padding:6px 8px;text-align:center;border:1px solid #1a5276}
+.ref-tbl td{padding:5px 8px;border:1px solid #dde3ea;text-align:center}
+.ref-tbl tr:nth-child(even) td{background:#f4f6f9}
+.ref-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.sec-hdr{font-size:12px;font-weight:700;color:#fff;background:#2E75B6;padding:7px 12px;border-radius:6px;margin-bottom:8px}
+.scroll-hint{font-size:10px;color:#888;text-align:center;margin-bottom:4px;display:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:640px){
+  body{padding:8px}
+  h1{font-size:16px;padding:12px 14px}
+  .desktop-table{display:none}
+  .mobile-cards{display:block}
+  .scroll-hint{display:block}
+  .summary-grid{grid-template-columns:1fr 1fr}
+  .metric-val{font-size:20px}
+  .card{padding:12px}
+}
+@media(min-width:641px){
+  .desktop-table{display:block}
+  .mobile-cards{display:none}
+}
+@media print{
+  body{background:#fff;padding:4px}
+  .add-btn,.del-btn,.del-btn-card{display:none}
+  .card{box-shadow:none;border-color:#ccc}
+}
 </style>
 </head>
 <body>
 
-<h1>Research Scoring Tool</h1> <div style="background:#1F3864;color:#C9A84C;text-align:center;font-size:12px;padding:6px 18px;font-family:Arial,sans-serif;">Created by Dr Ahmed Sohaib &mdash; Associate Professor of Oncology, Menoufia University</div> <div style="background:#1F3864;color:#C9A84C;text-align:center;font-size:12px;padding:6px 18px;font-family:Arial,sans-serif;">Created by Dr Ahmed Sohaib &mdash; Associate Professor of Oncology, Menoufia University</div>
+<h1>Research Scoring Tool</h1>
+<div class="author-bar">Created by Dr Ahmed Sohaib &mdash; Associate Professor of Oncology, Menoufia University</div>
 <div class="subtitle">Supreme Council of Universities – Scientific Committees – Cycle 15 (2025–2028) &nbsp;|&nbsp; Based on Articles 17, 22, 23, 31</div>
 
 <div class="card">
   <div class="section-title">Paper Entry</div>
-  <div class="tbl-wrap">
-  <table>
-    <thead>
-      <tr>
-        <th style="width:28px">#</th>
-        <th class="left-align" style="min-width:140px">Paper Title</th>
-        <th style="width:85px">Specialized<br>Journal?</th>
-        <th style="width:120px">WoS Quartile</th>
-        <th style="width:120px">Scopus Quartile</th>
-        <th style="width:110px">Same-Specialty<br>Authors (n)</th>
-        <th style="width:80px">1st/Last<br>Author?</th>
-        <th style="width:60px">FWCI<br><span style="font-weight:400;font-size:10px">(opt.)</span></th>
-        <th class="calc-col" style="width:60px">Journal<br>Score</th>
-        <th class="calc-col" style="width:110px">Reviewer Score<br>&amp; Grade</th>
-        <th class="calc-col" style="width:55px">Part.</th>
-        <th class="calc-col" style="width:60px">Points</th>
-        <th style="width:30px"></th>
-      </tr>
-    </thead>
-    <tbody id="paper-body"></tbody>
-  </table>
-  </div>
-  <button class="add-btn" onclick="addRow()">+ Add Paper</button>
 
+  <!-- DESKTOP TABLE -->
+  <div class="desktop-table">
+    <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width:28px">#</th>
+          <th class="la" style="min-width:130px">Paper Title</th>
+          <th style="width:80px">Specialized<br>Journal?</th>
+          <th style="width:110px">WoS Quartile</th>
+          <th style="width:110px">Scopus Quartile</th>
+          <th style="width:100px">Same-Spec.<br>Authors (n)</th>
+          <th style="width:80px">1st/Last<br>Author?</th>
+          <th style="width:58px">FWCI<br><span style="font-weight:400;font-size:10px">(opt.)</span></th>
+          <th class="calc" style="width:58px">J.Score</th>
+          <th class="calc" style="width:110px">Rev. Score &amp; Grade</th>
+          <th class="calc" style="width:50px">Part.</th>
+          <th class="calc" style="width:56px">Points</th>
+          <th style="width:28px"></th>
+        </tr>
+      </thead>
+      <tbody id="paper-body-desktop"></tbody>
+    </table>
+    </div>
+    <button class="add-btn" onclick="addRow()">+ Add Paper</button>
+  </div>
+
+  <!-- MOBILE CARDS -->
+  <div class="mobile-cards">
+    <div class="scroll-hint">Swipe cards to fill in each paper</div>
+    <div id="paper-body-mobile"></div>
+    <button class="add-btn" onclick="addRow()">+ Add Paper</button>
+  </div>
+
+  <!-- SUMMARY -->
   <div class="summary-grid">
     <div class="metric-card"><div class="metric-label">Papers entered</div><div class="metric-val" id="m-count">0</div></div>
     <div class="metric-card"><div class="metric-label">Total research points</div><div class="metric-val" id="m-pts" style="color:#888">0.0</div></div>
@@ -100,45 +149,29 @@
   </div>
 
   <div class="thresh-grid">
-    <div class="thresh-row">
-      <span class="thresh-label">Path 2 – Research component (need ≥ 42 pts toward 60 total)</span>
-      <span class="thresh-val" id="tv1">0.0</span>
-      <span id="ts1" class="fail-badge">Not yet</span>
-    </div>
-    <div class="thresh-row">
-      <span class="thresh-label">Path 1 – التميز العلمي: WoS specialized Q1/Q2 pts (need ≥ 54)</span>
-      <span class="thresh-val" id="tv2">0.0</span>
-      <span id="ts2" class="fail-badge">Not yet</span>
-    </div>
-    <div class="thresh-row">
-      <span class="thresh-label">Min. papers جيد+ for أستاذ مساعد (need ≥ 2)</span>
-      <span class="thresh-val" id="tv3">0</span>
-      <span id="ts3" class="fail-badge">Not yet</span>
-    </div>
-    <div class="thresh-row">
-      <span class="thresh-label">Min. papers جيد+ for أستاذ (need ≥ 3)</span>
-      <span class="thresh-val" id="tv4">0</span>
-      <span id="ts4" class="fail-badge">Not yet</span>
-    </div>
+    <div class="thresh-row"><span class="thresh-label">Path 2 – Research component (need ≥ 42 pts)</span><span class="thresh-val" id="tv1">0.0</span><span id="ts1" class="fail-badge">Not yet</span></div>
+    <div class="thresh-row"><span class="thresh-label">Path 1 – التميز العلمي: WoS Q1/Q2 specialized pts (need ≥ 54)</span><span class="thresh-val" id="tv2">0.0</span><span id="ts2" class="fail-badge">Not yet</span></div>
+    <div class="thresh-row"><span class="thresh-label">Min. papers جيد+ for أستاذ مساعد (need ≥ 2)</span><span class="thresh-val" id="tv3">0</span><span id="ts3" class="fail-badge">Not yet</span></div>
+    <div class="thresh-row"><span class="thresh-label">Min. papers جيد+ for أستاذ (need ≥ 3)</span><span class="thresh-val" id="tv4">0</span><span id="ts4" class="fail-badge">Not yet</span></div>
   </div>
 
   <div class="note-box">
     <strong>Points formula:</strong> (Reviewer Score × Journal Score × Participation) ÷ 50 + FWCI bonus (if FWCI ≥ 1), capped at 25 per paper.<br>
-    <strong>Path 2 full total</strong> needs ≥ 60 (research + activities 12/20 + discussion 6/10) for أستاذ مساعد, or ≥ 70 for أستاذ.<br>
-    <strong>Path 3 (معار):</strong> ≥ 8 papers, research component ≥ 48 pts.
+    <strong>Path 2 full total</strong> needs ≥ 60 for أستاذ مساعد, ≥ 70 for أستاذ. &nbsp;<strong>Path 3 (معار):</strong> ≥ 8 papers, research ≥ 48 pts.
   </div>
 </div>
 
 <div class="card">
-  <details open>
+  <details>
     <summary>Reference Tables (Articles 17, 22, 23)</summary>
 
-    <div style="margin-top:14px">
+    <div style="margin-top:12px">
     <div class="sec-hdr">Table 1 – Journal Scoring by Quartile (Article 17)</div>
+    <div class="ref-wrap">
     <table class="ref-tbl">
       <thead><tr><th>Score</th><th>Specialized · WoS</th><th>Specialized · Scopus</th><th>Non-Spec. · WoS</th><th>Non-Spec. · Scopus</th></tr></thead>
       <tbody>
-        <tr style="background:#1a5276;color:#fff"><td style="color:#fff;font-weight:700">10.0</td><td style="color:#fff">Q1 (any)</td><td style="color:#fff">—</td><td style="color:#fff">—</td><td style="color:#fff">—</td></tr>
+        <tr style="background:#1a5276"><td style="color:#fff;font-weight:700">10.0</td><td style="color:#fff">Q1 (any)</td><td style="color:#fff">—</td><td style="color:#fff">—</td><td style="color:#fff">—</td></tr>
         <tr><td style="font-weight:700;color:#1F3864">9.5</td><td>Q2</td><td>Q1 – Top 10%</td><td>—</td><td>—</td></tr>
         <tr><td style="font-weight:700;color:#1F3864">9.0</td><td>—</td><td>Q1</td><td>Q1</td><td>—</td></tr>
         <tr><td style="font-weight:700;color:#1F3864">8.5</td><td>Q3</td><td>Q2</td><td>Q2</td><td>Q1</td></tr>
@@ -147,41 +180,46 @@
         <tr><td style="font-weight:700;color:#1F3864">7.0</td><td>ESCI only</td><td>—</td><td>ESCI only</td><td>Q4</td></tr>
       </tbody>
     </table>
-    <p style="font-size:10px;color:#888;margin-top:4px">Best score between WoS and Scopus is always used. Specialized = journal specialty matches the committee's specialty.</p>
+    </div>
+    <p style="font-size:10px;color:#888;margin-top:4px">Best score between WoS and Scopus is always used.</p>
     </div>
 
-    <div style="margin-top:16px">
+    <div style="margin-top:14px">
     <div class="sec-hdr">Table 2 – Auto-Evaluation (Article 23) — Specialized Journals Only</div>
+    <div class="ref-wrap">
     <table class="ref-tbl">
-      <thead><tr><th>Condition</th><th>Reviewer Score</th><th>Grade</th><th>Notes</th></tr></thead>
+      <thead><tr><th>Condition</th><th>Score</th><th>Grade</th></tr></thead>
       <tbody>
-        <tr><td>Specialized, WoS Q1 – Class A (Top 10%)</td><td style="font-weight:700">100</td><td><span class="grade-badge g-ex">ممتاز</span></td><td>★ Auto — no review needed</td></tr>
-        <tr><td>Specialized, WoS Q1</td><td style="font-weight:700">90</td><td><span class="grade-badge g-vg">جيد جداً</span></td><td>★ Auto — no review needed</td></tr>
-        <tr><td>Specialized, WoS Q2</td><td style="font-weight:700">80</td><td><span class="grade-badge g-vg">جيد جداً</span></td><td>★ Auto — no review needed</td></tr>
-        <tr><td>Specialized, Scopus Q1 – Top 10%</td><td style="font-weight:700">80</td><td><span class="grade-badge g-vg">جيد جداً</span></td><td>★ Auto — no review needed</td></tr>
-        <tr><td>Specialized, Scopus Q1</td><td style="font-weight:700">75</td><td><span class="grade-badge g-gd">جيد</span></td><td>★ Auto — no review needed</td></tr>
-        <tr><td>All others</td><td style="font-weight:700">60</td><td><span class="grade-badge g-ac">مقبول</span></td><td>Subject to committee review</td></tr>
+        <tr><td style="text-align:left">Specialized, WoS Q1 – Class A (Top 10%)</td><td style="font-weight:700">100</td><td><span class="grade-badge g-ex">ممتاز</span></td></tr>
+        <tr><td style="text-align:left">Specialized, WoS Q1</td><td style="font-weight:700">90</td><td><span class="grade-badge g-vg">جيد جداً</span></td></tr>
+        <tr><td style="text-align:left">Specialized, WoS Q2</td><td style="font-weight:700">80</td><td><span class="grade-badge g-vg">جيد جداً</span></td></tr>
+        <tr><td style="text-align:left">Specialized, Scopus Q1 – Top 10%</td><td style="font-weight:700">80</td><td><span class="grade-badge g-vg">جيد جداً</span></td></tr>
+        <tr><td style="text-align:left">Specialized, Scopus Q1</td><td style="font-weight:700">75</td><td><span class="grade-badge g-gd">جيد</span></td></tr>
+        <tr><td style="text-align:left">All others</td><td style="font-weight:700">60</td><td><span class="grade-badge g-ac">مقبول</span></td></tr>
       </tbody>
     </table>
     </div>
+    </div>
 
-    <div style="margin-top:16px">
+    <div style="margin-top:14px">
     <div class="sec-hdr">Table 3 – Participation Ratios (Article 22)</div>
-    <table class="ref-tbl">
-      <thead><tr><th>Condition</th><th>Ratio</th></tr></thead>
+    <div class="ref-wrap">
+    <table class="ref-tbl" style="min-width:320px">
+      <thead><tr><th style="text-align:left">Condition</th><th>Ratio</th></tr></thead>
       <tbody>
         <tr><td style="text-align:left">First or last author (any journal)</td><td style="font-weight:700">1.00</td></tr>
-        <tr><td style="text-align:left">WoS / Scopus Top-10% journal — all authors</td><td style="font-weight:700">1.00</td></tr>
-        <tr><td style="text-align:left">Journal score = 10, same-specialty authors ≤ 4</td><td style="font-weight:700">1.00</td></tr>
-        <tr><td style="text-align:left">Journal score = 10, same-specialty authors 5–6</td><td style="font-weight:700">0.80</td></tr>
-        <tr><td style="text-align:left">Journal score = 10, same-specialty authors 7+</td><td style="font-weight:700">0.60</td></tr>
-        <tr><td style="text-align:left">Other journals, 1 same-specialty author</td><td style="font-weight:700">1.00</td></tr>
-        <tr><td style="text-align:left">Other journals, 2 same-specialty authors</td><td style="font-weight:700">0.80</td></tr>
-        <tr><td style="text-align:left">Other journals, 3 same-specialty authors</td><td style="font-weight:700">0.70</td></tr>
-        <tr><td style="text-align:left">Other journals, 4 same-specialty authors</td><td style="font-weight:700">0.55</td></tr>
-        <tr><td style="text-align:left">Other journals, 5+ same-specialty authors</td><td style="font-weight:700">0.40</td></tr>
+        <tr><td style="text-align:left">WoS/Scopus Top-10% — all authors</td><td style="font-weight:700">1.00</td></tr>
+        <tr><td style="text-align:left">J.Score=10, same-spec authors ≤ 4</td><td style="font-weight:700">1.00</td></tr>
+        <tr><td style="text-align:left">J.Score=10, same-spec authors 5–6</td><td style="font-weight:700">0.80</td></tr>
+        <tr><td style="text-align:left">J.Score=10, same-spec authors 7+</td><td style="font-weight:700">0.60</td></tr>
+        <tr><td style="text-align:left">Other journals, 1 same-spec author</td><td style="font-weight:700">1.00</td></tr>
+        <tr><td style="text-align:left">Other journals, 2 same-spec authors</td><td style="font-weight:700">0.80</td></tr>
+        <tr><td style="text-align:left">Other journals, 3 same-spec authors</td><td style="font-weight:700">0.70</td></tr>
+        <tr><td style="text-align:left">Other journals, 4 same-spec authors</td><td style="font-weight:700">0.55</td></tr>
+        <tr><td style="text-align:left">Other journals, 5+ same-spec authors</td><td style="font-weight:700">0.40</td></tr>
       </tbody>
     </table>
+    </div>
     </div>
   </details>
 </div>
@@ -197,9 +235,7 @@ function sKey(v){return v==="Q1 - Top 10%"?"Q1T":v==="—"?"":v}
 
 function jScore(w,s,sp){
   const wk=wKey(w),sk=sKey(s);
-  const ws=sp?(WS[wk]||0):(WN[wk]||0);
-  const ss=sp?(SS[sk]||0):(SN[sk]||0);
-  return Math.max(ws,ss);
+  return Math.max(sp?(WS[wk]||0):(WN[wk]||0), sp?(SS[sk]||0):(SN[sk]||0));
 }
 function revScore(w,s,sp){
   const wk=wKey(w),sk=sKey(s);
@@ -227,101 +263,159 @@ function partic(w,s,js,n,fl){
 }
 function calcPts(rv,js,p,fw){
   if(!js)return 0;
-  const bon=fw>=1?fw:0;
-  return Math.min(+(((rv*js*p)/50)+bon).toFixed(1),25);
+  return Math.min(+(((rv*js*p)/50)+(fw>=1?fw:0)).toFixed(1),25);
 }
 
 let rid=0;
 const D={};
 
+const WOS_OPTS='<option>—</option><option>Q1 - Top 10%</option><option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option><option>ESCI only</option>';
+const SCO_OPTS='<option>—</option><option>Q1 - Top 10%</option><option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option>';
+const N_OPTS=[1,2,3,4,5,6,7].map(x=>`<option value="${x}">${x===7?"7+":x}</option>`).join('');
+
 function addRow(){
   const id=++rid;
   D[id]={sp:true,w:"—",s:"—",n:1,fl:true,fw:0};
-  const idx=document.getElementById("paper-body").rows.length+1;
-  const ev=idx%2===0?"even":"odd";
-  document.getElementById("paper-body").insertAdjacentHTML("beforeend",`
-<tr id="tr${id}" class="${ev}">
-  <td style="color:#aaa;font-size:11px;font-weight:700">${idx}</td>
-  <td class="left-align"><input type="text" placeholder="Short title…" oninput="recalc()" style="min-width:130px"></td>
-  <td><select onchange="D[${id}].sp=this.value==='yes';recalc()">
-    <option value="yes">Yes</option><option value="no">No</option>
-  </select></td>
-  <td><select onchange="D[${id}].w=this.value;recalc()">
-    <option>—</option><option>Q1 - Top 10%</option><option>Q1</option>
-    <option>Q2</option><option>Q3</option><option>Q4</option><option>ESCI only</option>
-  </select></td>
-  <td><select onchange="D[${id}].s=this.value;recalc()">
-    <option>—</option><option>Q1 - Top 10%</option><option>Q1</option>
-    <option>Q2</option><option>Q3</option><option>Q4</option>
-  </select></td>
-  <td><select onchange="D[${id}].n=+this.value;recalc()">
-    ${[1,2,3,4,5,6,7].map(x=>`<option value="${x}">${x===7?"7+":x}</option>`).join("")}
-  </select></td>
-  <td><select onchange="D[${id}].fl=this.value==='yes';recalc()">
-    <option value="yes">Yes</option><option value="no">No</option>
-  </select></td>
-  <td><input type="number" min="0" step="0.1" placeholder="0" oninput="D[${id}].fw=+this.value||0;recalc()"></td>
-  <td class="calc-col" id="cjs${id}">—</td>
-  <td class="calc-col" id="crv${id}">—</td>
-  <td class="calc-col" id="cpt${id}">—</td>
-  <td class="calc-col pts-val" id="cpp${id}" style="color:#aaa">—</td>
+  const dIdx=document.getElementById("paper-body-desktop").rows.length+1;
+  const ev=dIdx%2===0?"even":"odd";
+
+  // Desktop row
+  document.getElementById("paper-body-desktop").insertAdjacentHTML("beforeend",`
+<tr id="dtr${id}" class="${ev}">
+  <td style="color:#aaa;font-size:11px;font-weight:700">${dIdx}</td>
+  <td class="la"><input type="text" placeholder="Short title…" oninput="recalc()" style="min-width:120px"></td>
+  <td><select onchange="syncD(${id},'sp',this.value==='yes');syncM(${id},'sp',this.value);recalc()"><option value="yes">Yes</option><option value="no">No</option></select></td>
+  <td><select onchange="syncD(${id},'w',this.value);syncM(${id},'w',this.value);recalc()">${WOS_OPTS}</select></td>
+  <td><select onchange="syncD(${id},'s',this.value);syncM(${id},'s',this.value);recalc()">${SCO_OPTS}</select></td>
+  <td><select onchange="syncD(${id},'n',+this.value);syncM(${id},'n',this.value);recalc()">${N_OPTS}</select></td>
+  <td><select onchange="syncD(${id},'fl',this.value==='yes');syncM(${id},'fl',this.value);recalc()"><option value="yes">Yes</option><option value="no">No</option></select></td>
+  <td><input type="number" min="0" step="0.1" placeholder="0" oninput="syncD(${id},'fw',+this.value||0);syncM(${id},'fw',this.value);recalc()"></td>
+  <td class="calc" id="djs${id}">—</td>
+  <td class="calc" id="drv${id}">—</td>
+  <td class="calc" id="dpt${id}">—</td>
+  <td class="calc" id="dpp${id}" style="font-size:14px;font-weight:700;color:#aaa">—</td>
   <td><button class="del-btn" onclick="delRow(${id})">✕</button></td>
 </tr>`);
+
+  // Mobile card
+  const mIdx=document.getElementById("paper-body-mobile").children.length+1;
+  document.getElementById("paper-body-mobile").insertAdjacentHTML("beforeend",`
+<div class="paper-card" id="mtr${id}">
+  <div class="paper-card-hdr">
+    <span class="paper-num">Paper ${mIdx}</span>
+    <button class="del-btn-card" onclick="delRow(${id})">Remove</button>
+  </div>
+  <div class="paper-grid">
+    <div class="paper-field paper-field-full">
+      <label>Paper title</label>
+      <input type="text" placeholder="Short title…" oninput="recalc()">
+    </div>
+    <div class="paper-field">
+      <label>Specialized journal?</label>
+      <select onchange="syncM(${id},'sp',this.value);syncDSel(${id},2,this.value);recalc()"><option value="yes">Yes</option><option value="no">No</option></select>
+    </div>
+    <div class="paper-field">
+      <label>1st or Last author?</label>
+      <select onchange="syncM(${id},'fl',this.value);syncDSel(${id},6,this.value);recalc()"><option value="yes">Yes</option><option value="no">No</option></select>
+    </div>
+    <div class="paper-field">
+      <label>WoS Quartile</label>
+      <select onchange="syncM(${id},'w',this.value);syncDSel(${id},3,this.value);recalc()">${WOS_OPTS}</select>
+    </div>
+    <div class="paper-field">
+      <label>Scopus Quartile</label>
+      <select onchange="syncM(${id},'s',this.value);syncDSel(${id},4,this.value);recalc()">${SCO_OPTS}</select>
+    </div>
+    <div class="paper-field">
+      <label>Same-specialty authors</label>
+      <select onchange="syncM(${id},'n',+this.value);syncDSel(${id},5,this.value);recalc()">${N_OPTS}</select>
+    </div>
+    <div class="paper-field">
+      <label>FWCI (optional)</label>
+      <input type="number" min="0" step="0.1" placeholder="0" oninput="syncM(${id},'fw',+this.value||0);syncDNum(${id},7,this.value);recalc()">
+    </div>
+  </div>
+  <div class="paper-results">
+    <div class="res-box"><div class="res-lbl">J.Score</div><div class="res-val" id="mjs${id}">—</div></div>
+    <div class="res-box"><div class="res-lbl">Rev.Score</div><div class="res-val" id="mrv${id}">—</div></div>
+    <div class="res-box"><div class="res-lbl">Part.</div><div class="res-val" id="mpt${id}">—</div></div>
+    <div class="res-box"><div class="res-lbl">Points</div><div class="res-val" id="mpp${id}" style="color:#aaa">—</div></div>
+  </div>
+</div>`);
   recalc();
+}
+
+function syncD(id,key,val){D[id][key]=val}
+function syncM(id,key,val){
+  if(key==='sp')D[id].sp=val==='yes';
+  else if(key==='fl')D[id].fl=val==='yes';
+  else if(key==='n')D[id].n=+val;
+  else if(key==='fw')D[id].fw=+val||0;
+  else D[id][key]=val;
+}
+function syncDSel(id,colIdx,val){
+  const row=document.getElementById("dtr"+id);
+  if(row)row.cells[colIdx].querySelector("select").value=val;
+}
+function syncDNum(id,colIdx,val){
+  const row=document.getElementById("dtr"+id);
+  if(row){const inp=row.cells[colIdx].querySelector("input");if(inp)inp.value=val;}
 }
 
 function delRow(id){
-  const t=document.getElementById("tr"+id);
-  if(t)t.remove();
+  const dt=document.getElementById("dtr"+id);if(dt)dt.remove();
+  const mt=document.getElementById("mtr"+id);if(mt)mt.remove();
   delete D[id];
-  reindex();
-  recalc();
+  reindex();recalc();
 }
-
 function reindex(){
-  document.querySelectorAll("#paper-body tr").forEach((r,i)=>{
-    r.cells[0].textContent=i+1;
-    r.className=(i+1)%2===0?"even":"odd";
+  document.querySelectorAll("#paper-body-desktop tr").forEach((r,i)=>{
+    r.cells[0].textContent=i+1;r.className=(i+1)%2===0?"even":"odd";
+  });
+  document.querySelectorAll("#paper-body-mobile .paper-card").forEach((c,i)=>{
+    c.querySelector(".paper-num").textContent="Paper "+(i+1);
   });
 }
 
 function setThresh(vi,si,val,thresh){
   document.getElementById(vi).textContent=Number.isInteger(thresh)?Math.round(val):val.toFixed(1);
-  const ok=val>thresh;
-  const el=document.getElementById(si);
-  el.textContent=ok?"✔ OK":"Not yet";
-  el.className=ok?"ok-badge":"fail-badge";
+  const ok=val>thresh,el=document.getElementById(si);
+  el.textContent=ok?"✔ OK":"Not yet";el.className=ok?"ok-badge":"fail-badge";
 }
 
 function recalc(){
   let tot=0,wq1pts=0,cnt=0,gdN=0,vgN=0;
-  document.querySelectorAll("#paper-body tr").forEach(tr=>{
-    const id=+tr.id.replace("tr","");
-    const r=D[id];if(!r)return;
-    cnt++;
+  Object.keys(D).forEach(id=>{
+    const r=D[id];
     const js=jScore(r.w,r.s,r.sp);
     const rv=revScore(r.w,r.s,r.sp);
     const p=partic(r.w,r.s,js,r.n,r.fl);
     const pp=calcPts(rv.v,js,p,r.fw);
-    tot+=pp;
+    tot+=pp;cnt++;
     const wk=wKey(r.w);
     if(r.sp&&(wk==="Q1T"||wk==="Q1"||wk==="Q2"))wq1pts+=pp;
-    if(rv.v>=70)gdN++;
-    if(rv.v>=80)vgN++;
-
-    document.getElementById("cjs"+id).textContent=js?js.toFixed(1):"—";
+    if(rv.v>=70)gdN++;if(rv.v>=80)vgN++;
     const g=grade(rv.v);
-    const rc=document.getElementById("crv"+id);
-    if(js){
-      rc.innerHTML=`<span class="grade-badge ${g.cls}">${rv.v} – ${g.txt}</span>`+
-                   (rv.auto?'<span class="auto-badge">★ auto</span>':"");
-    }else rc.textContent="—";
-    document.getElementById("cpt"+id).textContent=js?p.toFixed(2):"—";
-    const pc=document.getElementById("cpp"+id);
-    pc.textContent=pp>0?pp.toFixed(1):"—";
-    pc.style.color=pp>=18?"#166534":pp>=13?"#854d0e":pp>0?"#991b1b":"#aaa";
+    const gradeHtml=js?`<span class="grade-badge ${g.cls}">${rv.v}</span>`+(rv.auto?'<span class="auto-badge">★</span>':""):"—";
+    // desktop
+    if(document.getElementById("djs"+id)){
+      document.getElementById("djs"+id).textContent=js?js.toFixed(1):"—";
+      document.getElementById("drv"+id).innerHTML=js?`<span class="grade-badge ${g.cls}">${rv.v} – ${g.txt}</span>`+(rv.auto?'<span class="auto-badge">★ auto</span>':""):"—";
+      document.getElementById("dpt"+id).textContent=js?p.toFixed(2):"—";
+      const dpc=document.getElementById("dpp"+id);
+      dpc.textContent=pp>0?pp.toFixed(1):"—";
+      dpc.style.color=pp>=18?"#166534":pp>=13?"#854d0e":pp>0?"#991b1b":"#aaa";
+    }
+    // mobile
+    if(document.getElementById("mjs"+id)){
+      document.getElementById("mjs"+id).textContent=js?js.toFixed(1):"—";
+      document.getElementById("mrv"+id).innerHTML=gradeHtml;
+      document.getElementById("mpt"+id).textContent=js?p.toFixed(2):"—";
+      const mpc=document.getElementById("mpp"+id);
+      mpc.textContent=pp>0?pp.toFixed(1):"—";
+      mpc.style.color=pp>=18?"#166534":pp>=13?"#854d0e":pp>0?"#991b1b":"#aaa";
+    }
   });
-
   tot=+tot.toFixed(1);
   document.getElementById("m-count").textContent=cnt;
   const mp=document.getElementById("m-pts");
@@ -335,7 +429,6 @@ function recalc(){
   setThresh("tv4","ts4",gdN,2);
 }
 
-// Start with 3 blank rows
 addRow();addRow();addRow();
 </script>
 </body>
