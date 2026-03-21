@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SCU Research Scoring Tool – Cycle 15 (2025–2028)</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,sans-serif;font-size:13px;background:#f4f6f9;color:#1a1a1a;padding:16px}
+  h1{font-size:18px;font-weight:700;color:#fff;background:#1F3864;padding:14px 18px;border-radius:8px 8px 0 0;margin-bottom:0}
+  .subtitle{background:#D6E4F0;color:#333;font-size:11px;padding:8px 18px;border-radius:0;margin-bottom:16px;font-style:italic}
+  .card{background:#fff;border:1px solid #dde3ea;border-radius:10px;padding:18px;margin-bottom:16px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  .tbl-wrap{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;min-width:920px}
+  thead tr{background:#2E75B6}
+  th{padding:9px 7px;font-size:11px;font-weight:700;color:#fff;text-align:center;border:1px solid #1a5276;white-space:nowrap}
+  th.left-align{text-align:left}
+  td{padding:5px 6px;border:1px solid #dde3ea;font-size:12px;text-align:center;vertical-align:middle}
+  td.left-align{text-align:left}
+  td.calc-col{background:#EBF3FB;font-weight:700;color:#1F3864}
+  tr.even td:not(.calc-col){background:#f9f9f9}
+  tr.odd  td:not(.calc-col){background:#fff}
+  select,input[type=text]{font-size:12px;width:100%;padding:4px 5px;border:1px solid #b0bec5;border-radius:5px;background:#fff;color:#1a1a1a;outline:none}
+  select:focus,input:focus{border-color:#2E75B6}
+  input[type=number]{font-size:12px;width:64px;text-align:center;padding:4px 5px;border:1px solid #b0bec5;border-radius:5px;background:#fff;color:#1a1a1a}
+  .del-btn{background:none;border:1px solid #e57373;border-radius:5px;padding:3px 9px;cursor:pointer;color:#c62828;font-size:11px;transition:background .15s}
+  .del-btn:hover{background:#ffebee}
+  .add-btn{background:#fff;border:1px solid #90a4ae;border-radius:8px;padding:9px 22px;font-size:13px;cursor:pointer;color:#1F3864;font-weight:600;margin:8px 0 20px;transition:background .15s}
+  .add-btn:hover{background:#f0f4f8}
+  .auto-badge{font-size:10px;background:#dbeafe;color:#1e40af;border-radius:4px;padding:1px 6px;margin-left:4px;font-style:normal}
+  .grade-badge{font-size:11px;padding:2px 7px;border-radius:5px;font-weight:700;white-space:nowrap;display:inline-block}
+  .g-ex{background:#bbf7d0;color:#14532d}
+  .g-vg{background:#bfdbfe;color:#1e3a8a}
+  .g-gd{background:#fef9c3;color:#713f12}
+  .g-ac{background:#f1f5f9;color:#475569}
+  .g-wk{background:#fee2e2;color:#7f1d1d}
+  .pts-val{font-size:14px;font-weight:700}
+  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:16px}
+  .metric-card{background:#f0f4fa;border-radius:8px;padding:14px 16px;text-align:center}
+  .metric-label{font-size:11px;color:#666;margin-bottom:6px}
+  .metric-val{font-size:24px;font-weight:700;color:#1F3864}
+  .thresh-grid{display:grid;grid-template-columns:1fr;gap:8px}
+  .thresh-row{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:6px;gap:10px}
+  .thresh-label{font-size:12px;color:#475569;flex:1}
+  .thresh-val{font-size:13px;font-weight:700;min-width:44px;text-align:center}
+  .ok-badge{background:#dcfce7;color:#166534;border-radius:5px;padding:3px 10px;font-size:11px;font-weight:700}
+  .fail-badge{background:#fee2e2;color:#991b1b;border-radius:5px;padding:3px 10px;font-size:11px;font-weight:700}
+  details{margin-top:4px}
+  summary{cursor:pointer;font-size:12px;font-weight:700;color:#2E75B6;padding:6px 0;user-select:none}
+  .ref-tbl{width:100%;border-collapse:collapse;margin-top:10px;font-size:12px}
+  .ref-tbl th{background:#1F3864;color:#fff;padding:7px 10px;text-align:center;border:1px solid #1a5276}
+  .ref-tbl td{padding:5px 10px;border:1px solid #dde3ea;text-align:center}
+  .ref-tbl tr:nth-child(even) td{background:#f4f6f9}
+  .sec-hdr{font-size:13px;font-weight:700;color:#fff;background:#2E75B6;padding:8px 14px;border-radius:6px;margin-bottom:10px}
+  .note-box{background:#fffbeb;border:1px solid #f59e0b;border-radius:6px;padding:10px 14px;font-size:11px;color:#666;line-height:1.6;margin-top:8px}
+  .section-title{font-size:15px;font-weight:700;color:#1F3864;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #2E75B6}
+  @media print{
+    body{background:#fff;padding:4px}
+    .add-btn,.del-btn{display:none}
+    .card{box-shadow:none;border-color:#ccc}
+  }
+</style>
+</head>
+<body>
+
+<h1>Research Scoring Tool</h1>
+<div class="subtitle">Supreme Council of Universities – Scientific Committees – Cycle 15 (2025–2028) &nbsp;|&nbsp; Based on Articles 17, 22, 23, 31</div>
+
+<div class="card">
+  <div class="section-title">Paper Entry</div>
+  <div class="tbl-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th style="width:28px">#</th>
+        <th class="left-align" style="min-width:140px">Paper Title</th>
+        <th style="width:85px">Specialized<br>Journal?</th>
+        <th style="width:120px">WoS Quartile</th>
+        <th style="width:120px">Scopus Quartile</th>
+        <th style="width:110px">Same-Specialty<br>Authors (n)</th>
+        <th style="width:80px">1st/Last<br>Author?</th>
+        <th style="width:60px">FWCI<br><span style="font-weight:400;font-size:10px">(opt.)</span></th>
+        <th class="calc-col" style="width:60px">Journal<br>Score</th>
+        <th class="calc-col" style="width:110px">Reviewer Score<br>&amp; Grade</th>
+        <th class="calc-col" style="width:55px">Part.</th>
+        <th class="calc-col" style="width:60px">Points</th>
+        <th style="width:30px"></th>
+      </tr>
+    </thead>
+    <tbody id="paper-body"></tbody>
+  </table>
+  </div>
+  <button class="add-btn" onclick="addRow()">+ Add Paper</button>
+
+  <div class="summary-grid">
+    <div class="metric-card"><div class="metric-label">Papers entered</div><div class="metric-val" id="m-count">0</div></div>
+    <div class="metric-card"><div class="metric-label">Total research points</div><div class="metric-val" id="m-pts" style="color:#888">0.0</div></div>
+    <div class="metric-card"><div class="metric-label">Papers ≥ جيد (rev ≥ 70)</div><div class="metric-val" id="m-gd">0</div></div>
+    <div class="metric-card"><div class="metric-label">Papers ≥ جيد جداً (rev ≥ 80)</div><div class="metric-val" id="m-vg">0</div></div>
+  </div>
+
+  <div class="thresh-grid">
+    <div class="thresh-row">
+      <span class="thresh-label">Path 2 – Research component (need ≥ 42 pts toward 60 total)</span>
+      <span class="thresh-val" id="tv1">0.0</span>
+      <span id="ts1" class="fail-badge">Not yet</span>
+    </div>
+    <div class="thresh-row">
+      <span class="thresh-label">Path 1 – التميز العلمي: WoS specialized Q1/Q2 pts (need ≥ 54)</span>
+      <span class="thresh-val" id="tv2">0.0</span>
+      <span id="ts2" class="fail-badge">Not yet</span>
+    </div>
+    <div class="thresh-row">
+      <span class="thresh-label">Min. papers جيد+ for أستاذ مساعد (need ≥ 2)</span>
+      <span class="thresh-val" id="tv3">0</span>
+      <span id="ts3" class="fail-badge">Not yet</span>
+    </div>
+    <div class="thresh-row">
+      <span class="thresh-label">Min. papers جيد+ for أستاذ (need ≥ 3)</span>
+      <span class="thresh-val" id="tv4">0</span>
+      <span id="ts4" class="fail-badge">Not yet</span>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>Points formula:</strong> (Reviewer Score × Journal Score × Participation) ÷ 50 + FWCI bonus (if FWCI ≥ 1), capped at 25 per paper.<br>
+    <strong>Path 2 full total</strong> needs ≥ 60 (research + activities 12/20 + discussion 6/10) for أستاذ مساعد, or ≥ 70 for أستاذ.<br>
+    <strong>Path 3 (معار):</strong> ≥ 8 papers, research component ≥ 48 pts.
+  </div>
+</div>
+
+<div class="card">
+  <details open>
+    <summary>Reference Tables (Articles 17, 22, 23)</summary>
+
+    <div style="margin-top:14px">
+    <div class="sec-hdr">Table 1 – Journal Scoring by Quartile (Article 17)</div>
+    <table class="ref-tbl">
+      <thead><tr><th>Score</th><th>Specialized · WoS</th><th>Specialized · Scopus</th><th>Non-Spec. · WoS</th><th>Non-Spec. · Scopus</th></tr></thead>
+      <tbody>
+        <tr style="background:#1a5276;color:#fff"><td style="color:#fff;font-weight:700">10.0</td><td style="color:#fff">Q1 (any)</td><td style="color:#fff">—</td><td style="color:#fff">—</td><td style="color:#fff">—</td></tr>
+        <tr><td style="font-weight:700;color:#1F3864">9.5</td><td>Q2</td><td>Q1 – Top 10%</td><td>—</td><td>—</td></tr>
+        <tr><td style="font-weight:700;color:#1F3864">9.0</td><td>—</td><td>Q1</td><td>Q1</td><td>—</td></tr>
+        <tr><td style="font-weight:700;color:#1F3864">8.5</td><td>Q3</td><td>Q2</td><td>Q2</td><td>Q1</td></tr>
+        <tr><td style="font-weight:700;color:#1F3864">8.0</td><td>Q4</td><td>Q3</td><td>Q3</td><td>Q2</td></tr>
+        <tr><td style="font-weight:700;color:#1F3864">7.5</td><td>—</td><td>Q4</td><td>Q4</td><td>Q3</td></tr>
+        <tr><td style="font-weight:700;color:#1F3864">7.0</td><td>ESCI only</td><td>—</td><td>ESCI only</td><td>Q4</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:10px;color:#888;margin-top:4px">Best score between WoS and Scopus is always used. Specialized = journal specialty matches the committee's specialty.</p>
+    </div>
+
+    <div style="margin-top:16px">
+    <div class="sec-hdr">Table 2 – Auto-Evaluation (Article 23) — Specialized Journals Only</div>
+    <table class="ref-tbl">
+      <thead><tr><th>Condition</th><th>Reviewer Score</th><th>Grade</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Specialized, WoS Q1 – Class A (Top 10%)</td><td style="font-weight:700">100</td><td><span class="grade-badge g-ex">ممتاز</span></td><td>★ Auto — no review needed</td></tr>
+        <tr><td>Specialized, WoS Q1</td><td style="font-weight:700">90</td><td><span class="grade-badge g-vg">جيد جداً</span></td><td>★ Auto — no review needed</td></tr>
+        <tr><td>Specialized, WoS Q2</td><td style="font-weight:700">80</td><td><span class="grade-badge g-vg">جيد جداً</span></td><td>★ Auto — no review needed</td></tr>
+        <tr><td>Specialized, Scopus Q1 – Top 10%</td><td style="font-weight:700">80</td><td><span class="grade-badge g-vg">جيد جداً</span></td><td>★ Auto — no review needed</td></tr>
+        <tr><td>Specialized, Scopus Q1</td><td style="font-weight:700">75</td><td><span class="grade-badge g-gd">جيد</span></td><td>★ Auto — no review needed</td></tr>
+        <tr><td>All others</td><td style="font-weight:700">60</td><td><span class="grade-badge g-ac">مقبول</span></td><td>Subject to committee review</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div style="margin-top:16px">
+    <div class="sec-hdr">Table 3 – Participation Ratios (Article 22)</div>
+    <table class="ref-tbl">
+      <thead><tr><th>Condition</th><th>Ratio</th></tr></thead>
+      <tbody>
+        <tr><td style="text-align:left">First or last author (any journal)</td><td style="font-weight:700">1.00</td></tr>
+        <tr><td style="text-align:left">WoS / Scopus Top-10% journal — all authors</td><td style="font-weight:700">1.00</td></tr>
+        <tr><td style="text-align:left">Journal score = 10, same-specialty authors ≤ 4</td><td style="font-weight:700">1.00</td></tr>
+        <tr><td style="text-align:left">Journal score = 10, same-specialty authors 5–6</td><td style="font-weight:700">0.80</td></tr>
+        <tr><td style="text-align:left">Journal score = 10, same-specialty authors 7+</td><td style="font-weight:700">0.60</td></tr>
+        <tr><td style="text-align:left">Other journals, 1 same-specialty author</td><td style="font-weight:700">1.00</td></tr>
+        <tr><td style="text-align:left">Other journals, 2 same-specialty authors</td><td style="font-weight:700">0.80</td></tr>
+        <tr><td style="text-align:left">Other journals, 3 same-specialty authors</td><td style="font-weight:700">0.70</td></tr>
+        <tr><td style="text-align:left">Other journals, 4 same-specialty authors</td><td style="font-weight:700">0.55</td></tr>
+        <tr><td style="text-align:left">Other journals, 5+ same-specialty authors</td><td style="font-weight:700">0.40</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </details>
+</div>
+
+<script>
+const WS={Q1T:10,Q1:10,Q2:9.5,Q3:8.5,Q4:8,ESCI:7};
+const SS={Q1T:9.5,Q1:9,Q2:8.5,Q3:8,Q4:7.5};
+const WN={Q1T:9,Q1:9,Q2:8.5,Q3:8,Q4:7.5,ESCI:7};
+const SN={Q1T:8.5,Q1:8.5,Q2:8,Q3:7.5,Q4:7};
+
+function wKey(v){return v==="Q1 - Top 10%"?"Q1T":v==="ESCI only"?"ESCI":v==="—"?"":v}
+function sKey(v){return v==="Q1 - Top 10%"?"Q1T":v==="—"?"":v}
+
+function jScore(w,s,sp){
+  const wk=wKey(w),sk=sKey(s);
+  const ws=sp?(WS[wk]||0):(WN[wk]||0);
+  const ss=sp?(SS[sk]||0):(SN[sk]||0);
+  return Math.max(ws,ss);
+}
+function revScore(w,s,sp){
+  const wk=wKey(w),sk=sKey(s);
+  if(!sp)return{v:60,auto:false};
+  if(wk==="Q1T")return{v:100,auto:true};
+  if(wk==="Q1") return{v:90, auto:true};
+  if(wk==="Q2") return{v:80, auto:true};
+  if(sk==="Q1T")return{v:80, auto:true};
+  if(sk==="Q1") return{v:75, auto:true};
+  return{v:60,auto:false};
+}
+function grade(rv){
+  if(rv>=95)return{txt:"ممتاز",cls:"g-ex"};
+  if(rv>=80)return{txt:"جيد جداً",cls:"g-vg"};
+  if(rv>=70)return{txt:"جيد",cls:"g-gd"};
+  if(rv>=60)return{txt:"مقبول",cls:"g-ac"};
+  return{txt:"ضعيف",cls:"g-wk"};
+}
+function partic(w,s,js,n,fl){
+  const wk=wKey(w),sk=sKey(s);
+  if(fl)return 1;
+  if(wk==="Q1T"||sk==="Q1T")return 1;
+  if(js===10){return n<=4?1:n<=6?.8:.6;}
+  return n===1?1:n===2?.8:n===3?.7:n===4?.55:.4;
+}
+function calcPts(rv,js,p,fw){
+  if(!js)return 0;
+  const bon=fw>=1?fw:0;
+  return Math.min(+(((rv*js*p)/50)+bon).toFixed(1),25);
+}
+
+let rid=0;
+const D={};
+
+function addRow(){
+  const id=++rid;
+  D[id]={sp:true,w:"—",s:"—",n:1,fl:true,fw:0};
+  const idx=document.getElementById("paper-body").rows.length+1;
+  const ev=idx%2===0?"even":"odd";
+  document.getElementById("paper-body").insertAdjacentHTML("beforeend",`
+<tr id="tr${id}" class="${ev}">
+  <td style="color:#aaa;font-size:11px;font-weight:700">${idx}</td>
+  <td class="left-align"><input type="text" placeholder="Short title…" oninput="recalc()" style="min-width:130px"></td>
+  <td><select onchange="D[${id}].sp=this.value==='yes';recalc()">
+    <option value="yes">Yes</option><option value="no">No</option>
+  </select></td>
+  <td><select onchange="D[${id}].w=this.value;recalc()">
+    <option>—</option><option>Q1 - Top 10%</option><option>Q1</option>
+    <option>Q2</option><option>Q3</option><option>Q4</option><option>ESCI only</option>
+  </select></td>
+  <td><select onchange="D[${id}].s=this.value;recalc()">
+    <option>—</option><option>Q1 - Top 10%</option><option>Q1</option>
+    <option>Q2</option><option>Q3</option><option>Q4</option>
+  </select></td>
+  <td><select onchange="D[${id}].n=+this.value;recalc()">
+    ${[1,2,3,4,5,6,7].map(x=>`<option value="${x}">${x===7?"7+":x}</option>`).join("")}
+  </select></td>
+  <td><select onchange="D[${id}].fl=this.value==='yes';recalc()">
+    <option value="yes">Yes</option><option value="no">No</option>
+  </select></td>
+  <td><input type="number" min="0" step="0.1" placeholder="0" oninput="D[${id}].fw=+this.value||0;recalc()"></td>
+  <td class="calc-col" id="cjs${id}">—</td>
+  <td class="calc-col" id="crv${id}">—</td>
+  <td class="calc-col" id="cpt${id}">—</td>
+  <td class="calc-col pts-val" id="cpp${id}" style="color:#aaa">—</td>
+  <td><button class="del-btn" onclick="delRow(${id})">✕</button></td>
+</tr>`);
+  recalc();
+}
+
+function delRow(id){
+  const t=document.getElementById("tr"+id);
+  if(t)t.remove();
+  delete D[id];
+  reindex();
+  recalc();
+}
+
+function reindex(){
+  document.querySelectorAll("#paper-body tr").forEach((r,i)=>{
+    r.cells[0].textContent=i+1;
+    r.className=(i+1)%2===0?"even":"odd";
+  });
+}
+
+function setThresh(vi,si,val,thresh){
+  document.getElementById(vi).textContent=Number.isInteger(thresh)?Math.round(val):val.toFixed(1);
+  const ok=val>thresh;
+  const el=document.getElementById(si);
+  el.textContent=ok?"✔ OK":"Not yet";
+  el.className=ok?"ok-badge":"fail-badge";
+}
+
+function recalc(){
+  let tot=0,wq1pts=0,cnt=0,gdN=0,vgN=0;
+  document.querySelectorAll("#paper-body tr").forEach(tr=>{
+    const id=+tr.id.replace("tr","");
+    const r=D[id];if(!r)return;
+    cnt++;
+    const js=jScore(r.w,r.s,r.sp);
+    const rv=revScore(r.w,r.s,r.sp);
+    const p=partic(r.w,r.s,js,r.n,r.fl);
+    const pp=calcPts(rv.v,js,p,r.fw);
+    tot+=pp;
+    const wk=wKey(r.w);
+    if(r.sp&&(wk==="Q1T"||wk==="Q1"||wk==="Q2"))wq1pts+=pp;
+    if(rv.v>=70)gdN++;
+    if(rv.v>=80)vgN++;
+
+    document.getElementById("cjs"+id).textContent=js?js.toFixed(1):"—";
+    const g=grade(rv.v);
+    const rc=document.getElementById("crv"+id);
+    if(js){
+      rc.innerHTML=`<span class="grade-badge ${g.cls}">${rv.v} – ${g.txt}</span>`+
+                   (rv.auto?'<span class="auto-badge">★ auto</span>':"");
+    }else rc.textContent="—";
+    document.getElementById("cpt"+id).textContent=js?p.toFixed(2):"—";
+    const pc=document.getElementById("cpp"+id);
+    pc.textContent=pp>0?pp.toFixed(1):"—";
+    pc.style.color=pp>=18?"#166534":pp>=13?"#854d0e":pp>0?"#991b1b":"#aaa";
+  });
+
+  tot=+tot.toFixed(1);
+  document.getElementById("m-count").textContent=cnt;
+  const mp=document.getElementById("m-pts");
+  mp.textContent=tot.toFixed(1);
+  mp.style.color=tot>=42?"#166534":tot>=25?"#854d0e":"#888";
+  document.getElementById("m-gd").textContent=gdN;
+  document.getElementById("m-vg").textContent=vgN;
+  setThresh("tv1","ts1",tot,41);
+  setThresh("tv2","ts2",+wq1pts.toFixed(1),53);
+  setThresh("tv3","ts3",gdN,1);
+  setThresh("tv4","ts4",gdN,2);
+}
+
+// Start with 3 blank rows
+addRow();addRow();addRow();
+</script>
+</body>
+</html>
