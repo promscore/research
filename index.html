@@ -14,9 +14,9 @@ h1{font-size:18px;font-weight:700;color:#fff;background:#1F3864;padding:14px 18p
 .section-title{font-size:15px;font-weight:700;color:#1F3864;margin-bottom:12px;padding-bottom:6px;border-bottom:2px solid #2E75B6}
 
 /* ── STICKY SUMMARY BAR ── */
-.sticky-summary{position:fixed;top:0;left:0;right:0;z-index:1000;background:linear-gradient(135deg,#1F3864 0%,#2E75B6 100%);color:#fff;padding:10px 16px;display:flex;justify-content:center;gap:28px;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.25);font-size:13px}
+.sticky-summary{position:fixed;top:0;left:0;right:0;z-index:1000;background:#C9A84C;color:#1F3864;padding:10px 16px;display:flex;justify-content:center;gap:36px;align-items:center;box-shadow:0 2px 10px rgba(0,0,0,.2);font-size:13px}
 .sticky-item{display:flex;align-items:center;gap:6px}
-.sticky-label{font-size:11px;opacity:.85}
+.sticky-label{font-size:11px;font-weight:600;opacity:.9}
 .sticky-val{font-size:18px;font-weight:700;min-width:30px;text-align:center}
 
 /* ── DESKTOP TABLE ── */
@@ -50,10 +50,12 @@ input[type=number]{font-size:12px;width:64px;text-align:center;padding:4px 5px;b
 .res-val{font-size:13px;font-weight:700;color:#1F3864}
 .del-btn-card{background:none;border:1px solid #e57373;border-radius:5px;padding:4px 10px;cursor:pointer;color:#c62828;font-size:12px}
 
-/* ── SHARED ── */
-.add-btn{background:#fff;border:1px solid #90a4ae;border-radius:8px;padding:10px 22px;font-size:13px;cursor:pointer;color:#1F3864;font-weight:600;margin:6px 0 18px;display:block;width:100%;text-align:center}
-.add-btn:active{background:#f0f4f8}
-.add-btn:disabled{opacity:.4;cursor:not-allowed}
+/* ── ADD BUTTON ── */
+.add-btn{background:#2E75B6;border:none;border-radius:8px;padding:11px 22px;font-size:14px;cursor:pointer;color:#fff;font-weight:700;margin:6px 0 18px;display:block;width:100%;text-align:center;letter-spacing:0.3px;transition:background .15s}
+.add-btn:hover{background:#1F5F9C}
+.add-btn:active{background:#174a7a}
+.add-btn:disabled{opacity:.4;cursor:not-allowed;background:#90a4ae}
+
 .auto-badge{font-size:10px;background:#dbeafe;color:#1e40af;border-radius:4px;padding:1px 5px;margin-left:3px}
 .grade-badge{font-size:11px;padding:2px 6px;border-radius:5px;font-weight:700;white-space:nowrap;display:inline-block}
 .g-ex{background:#bbf7d0;color:#14532d}
@@ -174,8 +176,6 @@ summary{cursor:pointer;font-size:12px;font-weight:700;color:#2E75B6;padding:6px 
  <div class="summary-grid">
   <div class="metric-card"><div class="metric-label">Papers entered</div><div class="metric-val" id="m-count">0</div></div>
   <div class="metric-card"><div class="metric-label">Total research points</div><div class="metric-val" id="m-pts" style="color:#888">0.0</div></div>
-  <div class="metric-card"><div class="metric-label">Papers ≥ جيد (rev ≥ 70)</div><div class="metric-val" id="m-gd">0</div></div>
-  <div class="metric-card"><div class="metric-label">Papers ≥ جيد جداً (rev ≥ 80)</div><div class="metric-val" id="m-vg">0</div></div>
  </div>
 
  <div class="thresh-grid">
@@ -258,21 +258,21 @@ summary{cursor:pointer;font-size:12px;font-weight:700;color:#2E75B6;padding:6px 
 </div>
 
 <script>
-const MAX_PAPERS=8;
-const WS={Q1T:10,Q1:10,Q2:9.5,Q3:8.5,Q4:8,ESCI:7};
-const SS={Q1T:9.5,Q1:9,Q2:8.5,Q3:8,Q4:7.5};
-const WN={Q1T:9,Q1:9,Q2:8.5,Q3:8,Q4:7.5,ESCI:7};
-const SN={Q1T:8.5,Q1:8.5,Q2:8,Q3:7.5,Q4:7};
+var MAX_PAPERS=8;
+var WS={Q1T:10,Q1:10,Q2:9.5,Q3:8.5,Q4:8,ESCI:7};
+var SS={Q1T:9.5,Q1:9,Q2:8.5,Q3:8,Q4:7.5};
+var WN={Q1T:9,Q1:9,Q2:8.5,Q3:8,Q4:7.5,ESCI:7};
+var SN={Q1T:8.5,Q1:8.5,Q2:8,Q3:7.5,Q4:7};
 
 function wKey(v){return v==="Q1 - Top 10%"?"Q1T":v==="ESCI only"?"ESCI":v==="\u2014"?"":v}
 function sKey(v){return v==="Q1 - Top 10%"?"Q1T":v==="\u2014"?"":v}
 
 function jScore(w,s,sp){
- const wk=wKey(w),sk=sKey(s);
+ var wk=wKey(w),sk=sKey(s);
  return Math.max(sp?(WS[wk]||0):(WN[wk]||0), sp?(SS[sk]||0):(SN[sk]||0));
 }
 function revScore(w,s,sp){
- const wk=wKey(w),sk=sKey(s);
+ var wk=wKey(w),sk=sKey(s);
  if(!sp)return{v:60,auto:false};
  if(wk==="Q1T")return{v:100,auto:true};
  if(wk==="Q1") return{v:90, auto:true};
@@ -289,7 +289,7 @@ function grade(rv){
  return{txt:"\u0636\u0639\u064a\u0641",cls:"g-wk"};
 }
 function partic(w,s,js,n,fl){
- const wk=wKey(w),sk=sKey(s);
+ var wk=wKey(w),sk=sKey(s);
  if(fl)return 1;
  if(wk==="Q1T"||sk==="Q1T")return 1;
  if(js===10){return n<=4?1:n<=6?.8:.6;}
@@ -300,16 +300,16 @@ function calcPts(rv,js,p,fw){
  return Math.min(+(((rv*js*p)/50)+(fw>=1?fw:0)).toFixed(1),25);
 }
 
-let rid=0;
-const D={};
-const WOS_OPTS='<option>\u2014</option><option>Q1 - Top 10%</option><option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option><option>ESCI only</option>';
-const SCO_OPTS='<option>\u2014</option><option>Q1 - Top 10%</option><option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option>';
-const N_OPTS=[1,2,3,4,5,6,7].map(x=>'<option value="'+x+'">'+(x===7?"7+":x)+'</option>').join('');
+var rid=0;
+var D={};
+var WOS_OPTS='<option>\u2014</option><option>Q1 - Top 10%</option><option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option><option>ESCI only</option>';
+var SCO_OPTS='<option>\u2014</option><option>Q1 - Top 10%</option><option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option>';
+var N_OPTS=[1,2,3,4,5,6,7].map(function(x){return '<option value="'+x+'">'+(x===7?"7+":x)+'</option>';}).join('');
 
 function paperCount(){return Object.keys(D).length}
 
 function updateAddBtns(){
- const full=paperCount()>=MAX_PAPERS;
+ var full=paperCount()>=MAX_PAPERS;
  document.getElementById("add-btn-desktop").disabled=full;
  document.getElementById("add-btn-mobile").disabled=full;
  document.getElementById("add-btn-desktop").textContent=full?"Maximum 8 papers reached":"+ Add Paper";
@@ -318,10 +318,10 @@ function updateAddBtns(){
 
 function addRow(){
  if(paperCount()>=MAX_PAPERS)return;
- const id=++rid;
+ var id=++rid;
  D[id]={sp:true,w:"\u2014",s:"\u2014",n:1,fl:true,fw:0};
- const dIdx=document.getElementById("paper-body-desktop").rows.length+1;
- const ev=dIdx%2===0?"even":"odd";
+ var dIdx=document.getElementById("paper-body-desktop").rows.length+1;
+ var ev=dIdx%2===0?"even":"odd";
 
  document.getElementById("paper-body-desktop").insertAdjacentHTML("beforeend",
  '<tr id="dtr'+id+'" class="'+ev+'">'+
@@ -421,7 +421,7 @@ function reindex(){
 }
 
 function recalc(){
- var tot=0,cnt=0,gdN=0,vgN=0,wosQ1count=0;
+ var tot=0,cnt=0,wosQ1count=0;
 
  Object.keys(D).forEach(function(id){
   var r=D[id];
@@ -434,7 +434,6 @@ function recalc(){
   var wk=wKey(r.w);
   if(r.sp && (wk==="Q1T"||wk==="Q1")) wosQ1count++;
 
-  if(rv.v>=70)gdN++;if(rv.v>=80)vgN++;
   var g=grade(rv.v);
   var gradeHtml=js?'<span class="grade-badge '+g.cls+'">'+rv.v+'</span>'+(rv.auto?'<span class="auto-badge">\u2605</span>':""):"\u2014";
 
@@ -462,34 +461,32 @@ function recalc(){
  var mp=document.getElementById("m-pts");
  mp.textContent=tot.toFixed(1);
  mp.style.color=tot>=42?"#166534":tot>=25?"#854d0e":"#888";
- document.getElementById("m-gd").textContent=gdN;
- document.getElementById("m-vg").textContent=vgN;
 
  document.getElementById("s-count").textContent=cnt;
  document.getElementById("s-pts").textContent=tot.toFixed(1);
 
- // Path 1 — التميز العلمي: 3 WoS Q1 specialized papers
+ // Path 1
  document.getElementById("tv1").textContent=wosQ1count;
  var p1ok=wosQ1count>=3;
  var ts1=document.getElementById("ts1");
  ts1.textContent=p1ok?"\u2714 \u062a\u062d\u0642\u0642":"\u0644\u0645 \u064a\u062a\u062d\u0642\u0642";
  ts1.className=p1ok?"ok-badge":"fail-badge";
 
- // Path 2 — على رأس العمل: ≥ 42 pts
+ // Path 2
  document.getElementById("tv2").textContent=tot.toFixed(1);
  var p2ok=tot>=42;
  var ts2=document.getElementById("ts2");
  ts2.textContent=p2ok?"\u2714 \u062a\u062d\u0642\u0642":"\u0644\u0645 \u064a\u062a\u062d\u0642\u0642";
  ts2.className=p2ok?"ok-badge":"fail-badge";
 
- // Path 3 — معار من عام إلى عامين: ≥ 48 pts
+ // Path 3
  document.getElementById("tv3").textContent=tot.toFixed(1);
  var p3ok=tot>=48;
  var ts3=document.getElementById("ts3");
  ts3.textContent=p3ok?"\u2714 \u062a\u062d\u0642\u0642":"\u0644\u0645 \u064a\u062a\u062d\u0642\u0642";
  ts3.className=p3ok?"ok-badge":"fail-badge";
 
- // Path 4 — معار منذ أكثر من عامين: ≥ 51 pts
+ // Path 4
  document.getElementById("tv4").textContent=tot.toFixed(1);
  var p4ok=tot>=51;
  var ts4=document.getElementById("ts4");
